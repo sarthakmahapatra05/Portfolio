@@ -35,7 +35,7 @@ Welcome to my personal portfolio website! This project showcases my journey as a
 
 ## 🚩 Live Demo
 
-> Coming soon! (Deploy on GitHub Pages, Vercel, or Netlify)
+> https://sarthakmahapatraportfolio.netlify.app/
 
 ## 🏁 Getting Started
 
