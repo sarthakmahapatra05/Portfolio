@@ -33,10 +33,6 @@ Welcome to my personal portfolio website! This project showcases my journey as a
 - Project highlights with tech badges
 - Contact section with direct links
 
-## 📸 Screenshots
-
-![Portfolio Screenshot](./screenshot.png) <!-- Add your screenshot here -->
-
 ## 🚩 Live Demo
 
 > Coming soon! (Deploy on GitHub Pages, Vercel, or Netlify)
