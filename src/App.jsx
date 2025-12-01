@@ -13,7 +13,6 @@ import {
   Briefcase,
   ArrowRight,
   ExternalLink,
-  ShoppingCart,
   HardDrive,
   Folder,
   Trash2
@@ -51,33 +50,30 @@ function App() {
 
   const skills = [
     { name: 'Python', level: 90, category: 'Programming' },
-    { name: 'C Programming', level: 85, category: 'Programming' },
-    { name: 'React.js', level: 88, category: 'Frontend' },
-    { name: 'JavaScript', level: 85, category: 'Frontend' },
-    { name: 'HTML/CSS', level: 90, category: 'Frontend' },
-    { name: 'DSA in Python', level: 80, category: 'Algorithms' },
-    { name: 'MERN Stack', level: 85, category: 'Full Stack' }
+    { name: 'C Programming', level: 100 , category: 'Programming' },
+    { name: 'React.js', level: 95, category: 'Frontend' },
+    { name: 'JavaScript', level: 98, category: 'Frontend' },
+    { name: 'HTML/CSS', level: 100, category: 'Frontend' },
+    { name: 'DSA in Python', level: 95, category: 'Algorithms' },
+    { name: 'MERN Stack', level: 90, category: 'Full Stack' }
   ];
 
   const projects = [
     {
-      title: 'E-Commerce Website',
-      description: 'A full-featured e-commerce platform built with the MERN stack, featuring user authentication, product catalog, shopping cart, and secure payment processing.',
-      technologies: ['React.js', 'Node.js', 'MongoDB', 'Express.js', 'JavaScript'],
-      icon: <ShoppingCart className="w-8 h-8" />,
+      title: 'Vaccination Portal',
+      description: 'A comprehensive web application for managing COVID-19 vaccination appointments, contributed in this open source project by enhancing the user interface at GSSOC\'25.',
+      technologies: ['React.js', 'Node.js', 'MongoDB', 'JavaScript'],
       features: [
-        'User Authentication & Authorization',
-        'Product Catalog with Search & Filters',
-        'Shopping Cart & Checkout System',
-        'Order Management',
-        'Responsive Design'
+        'User interface enhancements',
+        'Dark mode light mode toggle',
+        'Layout improvements',
       ],
       color: 'from-green-400 to-emerald-600'
     },
     {
-      title: 'System File Management Tool',
+      title: 'BYTESWEEP',
       description: 'An intelligent system utility that detects and manages temporary files, large files, and provides comprehensive file system analysis with cleanup features.',
-      technologies: ['Python', 'File System APIs', 'GUI Framework'],
+      technologies: ['React.js', 'Express.js', 'Supabase', 'Node.js', 'JavaScript'],
       icon: <HardDrive className="w-8 h-8" />,
       features: [
         'Temporary File Detection & Cleanup',
@@ -86,6 +82,17 @@ function App() {
         'Automated File Organization',
         'System Performance Optimization'
       ],
+      color: 'from-purple-400 to-indigo-600'
+    },
+    {
+      title: 'Algo Trading Community',
+      description: 'Algo Trading Platform for international markets, made open source contribution in it.',
+      technologies: ['React.js', 'Node.js', 'JavaScript'],
+      icon: <HardDrive className="w-8 h-8" />,
+      features: [
+        'Made indicator based algo trading page',
+        'Added new features to the existing codebase'
+        ],
       color: 'from-purple-400 to-indigo-600'
     }
   ];
@@ -152,7 +159,7 @@ function App() {
             </p>
             <p className="text-lg text-slate-400 mb-2">CGPA: 8.55</p>
             <p className="text-lg text-slate-400 mb-2">Email: sarthakmahapatra303@gmail.com</p>
-            <p className="text-lg text-slate-400 mb-8">LinkedIn: <a href="https://www.linkedin.com/in/Sarthakmahapatra" className="text-blue-400 underline" target="_blank" rel="noopener noreferrer">Sarthakmahapatra</a></p>
+            <p className="text-lg text-slate-400 mb-8">LinkedIn: <a href="www.linkedin.com/in/sarthak-mahapatra-3b681a316" className="text-blue-400 underline" target="_blank" rel="noopener noreferrer">Sarthakmahapatra</a></p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button
                 onClick={() => scrollToSection('about')}
@@ -353,18 +360,16 @@ function App() {
                 color: 'from-green-400 to-emerald-600'
               },
               {
-                title: 'To-Do Task App',
-                description: 'Created a responsive web app for managing daily tasks.',
-                technologies: ['React.js', 'JavaScript', 'HTML', 'CSS'],
-                icon: <Folder className="w-8 h-8" />,
+                title: 'Algo Trading Community',
+                description: 'Algo Trading Platform for international markets, made open source contribution in it.',
+                technologies: ['React.js', 'Node.js', 'JavaScript'],
+                icon: <HardDrive className="w-8 h-8" />,
                 features: [
-                  'Task creation, editing, and deletion',
-                  'Responsive design for all devices',
-                  'User-friendly interface',
-                  'Persistent storage of tasks'
-                ],
+                  'Made indicator based algo trading page',
+                  'Added new features to the existing codebase'
+               ],
                 color: 'from-purple-400 to-indigo-600'
-              }
+         }
             ].map((project, index) => (
               <div key={index} className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-blue-400/50 transition-all duration-300 hover:transform hover:scale-105">
                 <div className="flex items-center mb-6">
@@ -429,19 +434,19 @@ function App() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { name: 'C', level: 85, category: 'Programming' },
-              { name: 'Python', level: 90, category: 'Programming' },
-              { name: 'HTML', level: 90, category: 'Frontend' },
-              { name: 'CSS', level: 88, category: 'Frontend' },
-              { name: 'JavaScript', level: 85, category: 'Frontend' },
-              { name: 'Node.js', level: 85, category: 'Backend' },
-              { name: 'React.js', level: 88, category: 'Frontend' },
-              { name: 'Express.js', level: 80, category: 'Backend' },
-              { name: 'MongoDB', level: 80, category: 'Database' },
-              { name: 'Project Management', level: 80, category: 'Soft Skill' },
-              { name: 'Leadership', level: 85, category: 'Soft Skill' },
+              { name: 'C', level: 90, category: 'Programming' },
+              { name: 'Python', level: 95, category: 'Programming' },
+              { name: 'HTML', level: 100, category: 'Frontend' },
+              { name: 'CSS', level: 100, category: 'Frontend' },
+              { name: 'JavaScript', level: 95, category: 'Frontend' },
+              { name: 'Node.js', level: 95, category: 'Backend' },
+              { name: 'React.js', level: 98, category: 'Frontend' },
+              { name: 'Express.js', level: 85, category: 'Backend' },
+              { name: 'MongoDB', level: 75, category: 'Database' },
+              { name: 'Project Management', level: 95, category: 'Soft Skill' },
+              { name: 'Leadership', level: 87, category: 'Soft Skill' },
               { name: 'Communication', level: 90, category: 'Soft Skill' },
-              { name: 'Adaptability', level: 85, category: 'Soft Skill' }
+              { name: 'Adaptability', level: 92, category: 'Soft Skill' }
             ].map((skill, index) => (
               <div key={index} className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-blue-400/50 transition-all duration-300 hover:transform hover:scale-105">
                 <div className="flex items-center justify-between mb-4">
@@ -574,7 +579,7 @@ function App() {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto rounded-full"></div>
             <p className="text-slate-300 mt-6 max-w-2xl mx-auto">
-              I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology.
+              I'm always open to discussing new opportunities, interesting  projects, or just having a chat about technology.
             </p>
           </div>
 
@@ -598,7 +603,7 @@ function App() {
             </a>
 
             <a
-              href="https://www.linkedin.com/in/Sarthakmahapatra"
+              href="www.linkedin.com/in/sarthak-mahapatra-3b681a316"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-blue-400/50 transition-all duration-300 hover:transform hover:scale-105 text-center group"
@@ -632,7 +637,7 @@ function App() {
       <footer className="bg-slate-800/50 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-slate-400">
-            © 2024 Sarthak Mahapatra. Built with React & Tailwind CSS.
+            © 2025 Sarthak Mahapatra. Built with React & Tailwind CSS.
           </p>
         </div>
       </footer>
