@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useCallback } from 'react';
+import React, { useEffect, useMemo, useRef, useCallback, useState } from 'react';
 import { useGesture } from '@use-gesture/react';
 
 import img1 from '../images/image1.jpeg';
@@ -143,7 +143,8 @@ export default function DomeGallery(props) {
     document.body.classList.remove('dg-scroll-lock');
   }, []);
 
-  const items = useMemo(() => buildItems(images, segments), [images, segments]);
+  const [effSegments, setEffSegments] = useState(segments);
+  const items = useMemo(() => buildItems(images, effSegments), [images, effSegments]);
 
   const applyTransform = (xDeg, yDeg) => {
     const el = sphereRef.current;
@@ -172,6 +173,11 @@ export default function DomeGallery(props) {
       radius = Math.min(radius, heightGuard);
       radius = clamp(radius, minRadius, maxRadius);
       lockedRadiusRef.current = Math.round(radius);
+
+      // adjust segment count for narrower containers (improves layout and perf on mobile)
+      if (w < 420) setEffSegments(Math.max(12, Math.floor(segments * 0.35)));
+      else if (w < 768) setEffSegments(Math.max(18, Math.floor(segments * 0.55)));
+      else setEffSegments(segments);
 
       const viewerPad = Math.max(8, Math.round(minDim * padFactor));
       root.style.setProperty('--radius', `${lockedRadiusRef.current}px`);
@@ -526,6 +532,20 @@ export default function DomeGallery(props) {
     .sphere-item { width: calc(var(--item-width) * var(--item-size-x)); height: calc(var(--item-height) * var(--item-size-y)); position: absolute; top: -999px; bottom: -999px; left: -999px; right: -999px; margin: auto; transform-origin: 50% 50%; backface-visibility: hidden; transition: transform 300ms; transform: rotateY(calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2)) + var(--rot-y-delta, 0deg))) rotateX(calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2)) + var(--rot-x-delta, 0deg))) translateZ(var(--radius)); }
     .sphere-root[data-enlarging="true"] .scrim { opacity: 1 !important; pointer-events: all !important; }
     @media (max-aspect-ratio: 1/1) { .viewer-frame { height: auto !important; width: 100% !important; } }
+    /* Mobile adjustments */
+    @media (max-width: 767px) {
+      .sphere-root { --radius: 360px; --viewer-pad: 20px; }
+      .stage { perspective: calc(var(--radius) * 1.6); }
+      .viewer-frame { width: 92%; height: auto; max-height: 60vh; }
+      .item__image { inset: 6px; }
+      .scrim { backdrop-filter: blur(6px); }
+    }
+    @media (max-width: 420px) {
+      .sphere-root { --radius: 240px; --viewer-pad: 12px; }
+      .stage { perspective: calc(var(--radius) * 1.2); }
+      .viewer-frame { width: 96%; height: auto; max-height: 55vh; }
+      .item__image { inset: 4px; border-radius: calc(var(--tile-radius, 12px) * 0.7); }
+    }
     .item__image { position: absolute; inset: 10px; border-radius: var(--tile-radius, 12px); overflow: hidden; cursor: pointer; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: transform 300ms; pointer-events: auto; -webkit-transform: translateZ(0); transform: translateZ(0); }
     .item__image--reference { position: absolute; inset: 10px; pointer-events: none; }
   `;
@@ -533,7 +553,7 @@ export default function DomeGallery(props) {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: cssStyles }} />
-      <div ref={rootRef} className="sphere-root relative w-full h-full" style={{ ['--segments-x']: segments, ['--segments-y']: segments, ['--overlay-blur-color']: overlayBlurColor, ['--tile-radius']: imageBorderRadius, ['--enlarge-radius']: openedImageBorderRadius, ['--image-filter']: grayscale ? 'grayscale(1)' : 'none' }}>
+      <div ref={rootRef} className="sphere-root relative w-full h-full" style={{ ['--segments-x']: effSegments, ['--segments-y']: effSegments, ['--overlay-blur-color']: overlayBlurColor, ['--tile-radius']: imageBorderRadius, ['--enlarge-radius']: openedImageBorderRadius, ['--image-filter']: grayscale ? 'grayscale(1)' : 'none' }}>
         <main ref={mainRef} className="absolute inset-0 grid place-items-center overflow-hidden select-none bg-transparent" style={{ touchAction: 'none', WebkitUserSelect: 'none' }}>
           <div className="stage">
             <div ref={sphereRef} className="sphere">
