@@ -12,6 +12,9 @@ import wa2 from '../images/WhatsApp Image 2025-12-24 at 02.06.59.jpeg';
 import wa3 from '../images/WhatsApp Image 2025-12-24 at 02.07.00.jpeg';
 import wa4 from '../images/WhatsApp Image 2025-12-24 at 02.07.01.jpeg';
 import wa5 from '../images/WhatsApp Image 2025-12-24 at 02.07.02.jpeg';
+import heroSection1 from '../images/herosection1.jpeg';
+import heroSection2 from '../images/herosection2.jpeg';
+import splashScreenBg from '../images/splashscreenbg.jpeg';
 
 const DEFAULT_IMAGES = [
   { src: img1, alt: 'Image 1' },
@@ -24,7 +27,10 @@ const DEFAULT_IMAGES = [
   { src: wa2, alt: 'WhatsApp 3' },
   { src: wa3, alt: 'WhatsApp 4' },
   { src: wa4, alt: 'WhatsApp 5' },
-  { src: wa5, alt: 'WhatsApp 6' }
+  { src: wa5, alt: 'WhatsApp 6' },
+  { src: heroSection1, alt: 'Hero Section 1' },
+  { src: heroSection2, alt: 'Hero Section 2' },
+  { src: splashScreenBg, alt: 'Splash Screen Background' }
 ];
 
 const DEFAULTS = {
@@ -533,18 +539,24 @@ export default function DomeGallery(props) {
     .sphere-root[data-enlarging="true"] .scrim { opacity: 1 !important; pointer-events: all !important; }
     @media (max-aspect-ratio: 1/1) { .viewer-frame { height: auto !important; width: 100% !important; } }
     /* Mobile adjustments */
-    @media (max-width: 767px) {
-      .sphere-root { --radius: 360px; --viewer-pad: 20px; }
-      .stage { perspective: calc(var(--radius) * 1.6); }
-      .viewer-frame { width: 92%; height: auto; max-height: 60vh; }
+    @media (max-width: 900px) {
+      .sphere-root { --radius: 340px; --viewer-pad: 18px; }
+      .stage { perspective: calc(var(--radius) * 1.55); }
+      .viewer-frame { width: 92%; height: auto; max-height: 68dvh; }
       .item__image { inset: 6px; }
-      .scrim { backdrop-filter: blur(6px); }
+      .scrim { backdrop-filter: blur(5px); }
     }
-    @media (max-width: 420px) {
-      .sphere-root { --radius: 240px; --viewer-pad: 12px; }
-      .stage { perspective: calc(var(--radius) * 1.2); }
-      .viewer-frame { width: 96%; height: auto; max-height: 55vh; }
-      .item__image { inset: 4px; border-radius: calc(var(--tile-radius, 12px) * 0.7); }
+    @media (max-width: 640px) {
+      .sphere-root { --radius: 260px; --viewer-pad: 12px; }
+      .stage { perspective: calc(var(--radius) * 1.3); }
+      .viewer-frame { width: 94%; height: auto; max-height: 62dvh; }
+      .item__image { inset: 5px; border-radius: calc(var(--tile-radius, 12px) * 0.8); }
+    }
+    @media (max-width: 400px) {
+      .sphere-root { --radius: 210px; --viewer-pad: 10px; }
+      .stage { perspective: calc(var(--radius) * 1.15); }
+      .viewer-frame { width: 96%; height: auto; max-height: 56dvh; }
+      .item__image { inset: 4px; border-radius: calc(var(--tile-radius, 12px) * 0.72); }
     }
     .item__image { position: absolute; inset: 10px; border-radius: var(--tile-radius, 12px); overflow: hidden; cursor: pointer; backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: transform 300ms; pointer-events: auto; -webkit-transform: translateZ(0); transform: translateZ(0); }
     .item__image--reference { position: absolute; inset: 10px; pointer-events: none; }

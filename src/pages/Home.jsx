@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import heroSectionImage1 from '../images/herosection1.jpeg';
+import heroSectionImage2 from '../images/herosection2.jpeg';
 import { 
   ChevronDown, 
   MapPin, 
@@ -19,6 +24,77 @@ import {
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState('home');
+  const [heroSlide, setHeroSlide] = useState(0);
+  const homeRootRef = useRef(null);
+  const heroImages = [heroSectionImage1, heroSectionImage2];
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    if (!homeRootRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.hero-title',
+        { y: 38, opacity: 0, scale: 0.95 },
+        { y: 0, opacity: 1, scale: 1, duration: 1.1, ease: 'power3.out' }
+      );
+
+      gsap.utils.toArray('section').forEach((section) => {
+        gsap.fromTo(
+          section,
+          { y: 45, opacity: 0.1 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.9,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 80%'
+            }
+          }
+        );
+      });
+
+      gsap.utils.toArray('.feature-card').forEach((card) => {
+        gsap.fromTo(
+          card,
+          { y: 32, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 85%'
+            }
+          }
+        );
+      });
+
+      gsap.utils.toArray('.section-title').forEach((title) => {
+        gsap.fromTo(
+          title,
+          { y: 26, opacity: 0, letterSpacing: '0.08em' },
+          {
+            y: 0,
+            opacity: 1,
+            letterSpacing: '0.02em',
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: title,
+              start: 'top 86%'
+            }
+          }
+        );
+      });
+
+    }, homeRootRef);
+
+    return () => ctx.revert();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +115,14 @@ export default function Home() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % heroImages.length);
+    }, 4200);
+
+    return () => window.clearInterval(intervalId);
+  }, [heroImages.length]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -98,6 +182,23 @@ export default function Home() {
         'Added new features to the existing codebase'
         ],
       color: 'from-purple-400 to-indigo-600'
+    },
+    {
+      title: 'Symptocare',
+      description: 'A healthcare platform combining AI-assisted symptom analysis, role-based access, and patient-provider collaboration for modern digital care.',
+      technologies: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Docker', 'WebSockets'],
+      icon: <HardDrive className="w-8 h-8" />,
+      link: 'https://symptocare-sable.vercel.app/',
+      features: [
+        'AI-Powered Symptom Analysis',
+        'Doctor-Patient Portal',
+        'Personalized Dashboard',
+        'Fitgram Social',
+        'Multi-Role Authentication',
+        'Real-time Chat',
+        'Docker Containerization'
+      ],
+      color: 'from-amber-300 to-emerald-400'
     }
   ];
 
@@ -116,63 +217,110 @@ export default function Home() {
     }
   ];
 
+  const sectionMotion = {
+    initial: { opacity: 0, y: 24 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.2 },
+    transition: { duration: 0.6, ease: 'easeOut' }
+  };
+
   return (
-    <div>
+    <div ref={homeRootRef}>
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900/20 to-cyan-900/20"></div>
+      <motion.section {...sectionMotion} id="home" className="hero-section min-h-screen flex items-center justify-center relative overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={heroSlide}
+            className="absolute inset-0 hero-photo-layer"
+            style={{ backgroundImage: `url(${heroImages[heroSlide]})` }}
+            initial={{ opacity: 0.92, scale: 1.04 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.02 }}
+            transition={{ duration: 1.2, ease: 'easeInOut' }}
+          />
+        </AnimatePresence>
+        <div className="absolute inset-0 hero-gradient-layer"></div>
         <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <div className="animate-fade-in-up">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600 bg-clip-text text-transparent">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } }
+            }}
+            className="animate-fade-in-up hero-content-shell"
+          >
+            <motion.p
+              variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
+              className="hero-kicker"
+            >
+              Portfolio • Developer • Problem Solver
+            </motion.p>
+            <motion.h1
+              variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+              className="hero-title text-4xl sm:text-6xl lg:text-7xl font-bold mb-4"
+            >
+              <span className="hero-name-gradient bg-clip-text text-transparent">
                 Sarthak Mahapatra
               </span>
-            </h1>
-            <div className="flex items-center justify-center mb-6 text-slate-300">
+            </motion.h1>
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="hero-chip flex items-center justify-center mb-6 text-slate-100"
+            >
               <MapPin className="w-5 h-5 mr-2" />
               <span className="text-lg">Bhubaneswar, Odisha, India</span>
-            </div>
-            <p className="text-xl sm:text-2xl text-slate-300 mb-2 leading-relaxed">
+            </motion.div>
+            <motion.p variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }} className="text-xl sm:text-2xl text-slate-100 mb-3 leading-relaxed font-medium">
               Electronics & Communication Engineering Student
-            </p>
-            <p className="text-lg text-slate-400 mb-2">CGPA: 8.55</p>
-            <p className="text-lg text-slate-400 mb-2">Email: sarthakmahapatra303@gmail.com</p>
-            <p className="text-lg text-slate-400 mb-8">LinkedIn: <a href="www.linkedin.com/in/sarthak-mahapatra-3b681a316" className="text-blue-400 underline" target="_blank" rel="noopener noreferrer">Sarthakmahapatra</a></p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            </motion.p>
+            <motion.p variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }} className="hero-summary text-base sm:text-lg text-slate-300 mb-8 leading-relaxed">
+              Building clean full-stack web experiences with modern JavaScript, strong UI sense, and production-ready engineering practices.
+            </motion.p>
+            <motion.div variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }} className="hero-meta-row mb-8">
+              <span className="hero-meta-pill">CGPA 8.23</span>
+              <span className="hero-meta-pill">MERN Stack</span>
+              <a href="mailto:sarthakmahapatra303@gmail.com" className="hero-meta-pill hero-meta-link">Email Me</a>
+            </motion.div>
+            <motion.div variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }} className="hero-cta flex flex-col sm:flex-row gap-4 justify-center">
               <button
-                onClick={() => scrollToSection('about')}
-                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                onClick={() => scrollToSection('projects')}
+                className="btn-hero-primary px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
               >
-                Learn More About Me <ArrowRight className="w-5 h-5 ml-2" />
+                Explore Projects <ArrowRight className="w-5 h-5 ml-2" />
               </button>
-              <button
-                onClick={() => scrollToSection('contact')}
-                className="border-2 border-blue-400 hover:bg-blue-400 hover:text-slate-900 px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105"
+              <a
+                href="www.linkedin.com/in/sarthak-mahapatra-3b681a316"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-hero-secondary px-8 py-3 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center"
               >
-                Get In Touch
-              </button>
-            </div>
-          </div>
+                View LinkedIn <ExternalLink className="w-5 h-5 ml-2" />
+              </a>
+            </motion.div>
+          </motion.div>
         </div>
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ChevronDown className="w-6 h-6 text-slate-400" />
         </div>
-      </section>
+      </motion.section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8">
+      <motion.section {...sectionMotion} id="about" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="section-title text-4xl font-bold mb-4 bg-gradient-to-r from-amber-200 via-stone-100 to-emerald-200 bg-clip-text text-transparent">
               About Me
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-200 to-emerald-200 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
-                <User className="w-12 h-12 text-blue-400 mb-6" />
+              <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
+                <User className="w-12 h-12 text-amber-200 mb-6" />
                 <h3 className="text-2xl font-bold mb-4">Who I Am</h3>
                 <p className="text-slate-300 leading-relaxed mb-6">
                   I'm a passionate Electronics & Communication Engineering student at Silicon University, 
@@ -182,9 +330,9 @@ export default function Home() {
             </div>
 
             <div className="space-y-6">
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-blue-400/50 transition-all duration-300">
+              <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300">
                 <div className="flex items-center mb-4">
-                  <Briefcase className="w-8 h-8 text-cyan-400 mr-3" />
+                  <Briefcase className="w-8 h-8 text-emerald-200 mr-3" />
                   <h4 className="text-xl font-semibold">Current Focus</h4>
                 </div>
                 <p className="text-slate-300">
@@ -192,45 +340,45 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-blue-400/50 transition-all duration-300">
+              <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300">
                 <div className="flex items-center mb-4">
                   <MapPin className="w-8 h-8 text-green-400 mr-3" />
                   <h4 className="text-xl font-semibold">Languages</h4>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <span className="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-sm">English</span>
-                  <span className="bg-cyan-500/20 text-cyan-300 px-3 py-1 rounded-full text-sm">Hindi</span>
+                  <span className="bg-amber-200/20 text-amber-100 px-3 py-1 rounded-full text-sm">English</span>
+                  <span className="bg-emerald-200/20 text-emerald-200 px-3 py-1 rounded-full text-sm">Hindi</span>
                   <span className="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-sm">Odia</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Education Section */}
-      <section id="education" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/30">
+      <motion.section {...sectionMotion} id="education" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="section-title text-4xl font-bold mb-4 bg-gradient-to-r from-amber-200 via-stone-100 to-emerald-200 bg-clip-text text-transparent">
               Education
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-200 to-emerald-200 mx-auto rounded-full"></div>
           </div>
 
           <div className="space-y-8">
             {/* Current Education */}
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-blue-400/50 transition-all duration-300">
+            <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex items-start space-x-4">
-                  <div className="bg-blue-500/20 p-3 rounded-full">
-                    <GraduationCap className="w-8 h-8 text-blue-400" />
+                  <div className="bg-amber-200/20 p-3 rounded-full">
+                    <GraduationCap className="w-8 h-8 text-amber-200" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2">
                       B.Tech in Electronics and Communication Engineering
                     </h3>
-                    <p className="text-xl text-blue-400 mb-2">Silicon University, Bhubaneswar</p>
+                    <p className="text-xl text-amber-200 mb-2">Silicon University, Bhubaneswar</p>
                     <p className="text-lg text-slate-300 mb-1">2024 - 2028</p>
                     <p className="text-slate-400">CGPA: 8.55</p>
                   </div>
@@ -239,17 +387,17 @@ export default function Home() {
             </div>
 
             {/* Previous Education */}
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-blue-400/50 transition-all duration-300">
+            <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex items-start space-x-4">
-                  <div className="bg-cyan-500/20 p-3 rounded-full">
-                    <GraduationCap className="w-8 h-8 text-cyan-400" />
+                  <div className="bg-emerald-200/20 p-3 rounded-full">
+                    <GraduationCap className="w-8 h-8 text-emerald-200" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2">
                       CBSE (Class XII)
                     </h3>
-                    <p className="text-xl text-cyan-400 mb-2">Kendriya Vidyalaya No.1, BBSR, Odisha</p>
+                    <p className="text-xl text-emerald-200 mb-2">Kendriya Vidyalaya No.1, BBSR, Odisha</p>
                     <p className="text-lg text-slate-300 mb-1">2023</p>
                     <p className="text-slate-400">Score: 72%</p>
                   </div>
@@ -257,7 +405,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-blue-400/50 transition-all duration-300">
+            <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex items-start space-x-4">
                   <div className="bg-green-500/20 p-3 rounded-full">
@@ -276,16 +424,16 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
+      <motion.section {...sectionMotion} id="projects" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="section-title text-4xl font-bold mb-4 bg-gradient-to-r from-amber-200 via-stone-100 to-emerald-200 bg-clip-text text-transparent">
               Featured Projects
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-200 to-emerald-200 mx-auto rounded-full"></div>
             <p className="text-slate-300 mt-6 max-w-2xl mx-auto">
               Here are some of the projects I've built that showcase my technical skills and problem-solving abilities.
             </p>
@@ -293,7 +441,7 @@ export default function Home() {
 
           <div className="grid lg:grid-cols-2 gap-8">
             {projects.map((project, index) => (
-              <div key={index} className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-blue-400/50 transition-all duration-300 hover:transform hover:scale-105">
+              <div key={index} className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300 hover:transform hover:scale-105">
                 <div className="flex items-center mb-6">
                   <div className={`bg-gradient-to-r ${project.color} p-3 rounded-full mr-4`}>
                     {project.icon}
@@ -310,7 +458,7 @@ export default function Home() {
                   <ul className="space-y-2">
                     {project.features.map((feature, featureIndex) => (
                       <li key={featureIndex} className="flex items-center text-slate-300">
-                        <div className="w-2 h-2 bg-blue-400 rounded-full mr-3"></div>
+                        <div className="w-2 h-2 bg-amber-200 rounded-full mr-3"></div>
                         {feature}
                       </li>
                     ))}
@@ -327,13 +475,24 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
+
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-sm font-semibold text-emerald-100 hover:text-amber-100 transition-colors duration-200"
+                  >
+                    View Live Project <ExternalLink className="w-4 h-4 ml-2" />
+                  </a>
+                )}
               </div>
             ))}
           </div>
 
           <div className="mt-12 text-center">
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
-              <Folder className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+            <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
+              <Folder className="w-12 h-12 text-amber-200 mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-4">More Projects Coming Soon</h3>
               <p className="text-slate-300 max-w-2xl mx-auto">
                 I'm constantly working on new projects and exploring different technologies. 
@@ -342,21 +501,21 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/30">
+      <motion.section {...sectionMotion} id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="section-title text-4xl font-bold mb-4 bg-gradient-to-r from-amber-200 via-stone-100 to-emerald-200 bg-clip-text text-transparent">
               Skills & Technologies
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-200 to-emerald-200 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {skills.map((skill, index) => (
-              <div key={index} className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-blue-400/50 transition-all duration-300 hover:transform hover:scale-105">
+              <div key={index} className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300 hover:transform hover:scale-105">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-semibold text-white">{skill.name}</h3>
                   <span className="text-sm text-slate-400">{skill.level}%</span>
@@ -364,7 +523,7 @@ export default function Home() {
                 <div className="mb-3">
                   <div className="w-full bg-slate-700 rounded-full h-2">
                     <div 
-                      className="bg-gradient-to-r from-blue-400 to-cyan-400 h-2 rounded-full transition-all duration-1000 ease-out"
+                      className="bg-gradient-to-r from-amber-200 to-emerald-200 h-2 rounded-full transition-all duration-1000 ease-out"
                       style={{ width: `${skill.level}%` }}
                     ></div>
                   </div>
@@ -375,8 +534,8 @@ export default function Home() {
           </div>
 
           <div className="mt-12 text-center">
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
-              <Code className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+            <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
+              <Code className="w-12 h-12 text-amber-200 mx-auto mb-4" />
               <h3 className="text-2xl font-bold mb-4">MERN Stack Developer</h3>
               <p className="text-slate-300 max-w-2xl mx-auto">
                 Proficient in building full-stack web applications using MongoDB, Express.js, React.js, 
@@ -385,28 +544,28 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Certifications Section */}
-      <section id="certifications" className="py-20 px-4 sm:px-6 lg:px-8">
+      <motion.section {...sectionMotion} id="certifications" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="section-title text-4xl font-bold mb-4 bg-gradient-to-r from-amber-200 via-stone-100 to-emerald-200 bg-clip-text text-transparent">
               Certifications & Achievements
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-200 to-emerald-200 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {certifications.map((cert, index) => (
-              <div key={index} className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-blue-400/50 transition-all duration-300 hover:transform hover:scale-105">
+              <div key={index} className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300 hover:transform hover:scale-105">
                 <div className="flex items-start space-x-4">
-                  <div className="bg-blue-500/20 p-3 rounded-full">
+                  <div className="bg-amber-200/20 p-3 rounded-full">
                     {cert.icon}
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-white mb-2">{cert.title}</h3>
-                    <p className="text-blue-400 mb-2">{cert.issuer}</p>
+                    <p className="text-amber-200 mb-2">{cert.issuer}</p>
                     <p className="text-slate-300">{cert.description}</p>
                   </div>
                 </div>
@@ -414,52 +573,52 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Languages Section */}
-      <section id="languages" className="py-20 px-4 sm:px-6 lg:px-8">
+      <motion.section {...sectionMotion} id="languages" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="section-title text-4xl font-bold mb-4 bg-gradient-to-r from-amber-200 via-stone-100 to-emerald-200 bg-clip-text text-transparent">
               Languages
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-200 to-emerald-200 mx-auto rounded-full"></div>
           </div>
 
           <div className="space-y-8">
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-blue-400/50 transition-all duration-300">
+            <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex items-start space-x-4">
-                  <div className="bg-blue-500/20 p-3 rounded-full">
-                    <GraduationCap className="w-8 h-8 text-blue-400" />
+                  <div className="bg-amber-200/20 p-3 rounded-full">
+                    <GraduationCap className="w-8 h-8 text-amber-200" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2">
                       English
                     </h3>
-                    <p className="text-xl text-blue-400 mb-2">Fluent</p>
+                    <p className="text-xl text-amber-200 mb-2">Fluent</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-blue-400/50 transition-all duration-300">
+            <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex items-start space-x-4">
-                  <div className="bg-cyan-500/20 p-3 rounded-full">
-                    <GraduationCap className="w-8 h-8 text-cyan-400" />
+                  <div className="bg-emerald-200/20 p-3 rounded-full">
+                    <GraduationCap className="w-8 h-8 text-emerald-200" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2">
                       Hindi
                     </h3>
-                    <p className="text-xl text-cyan-400 mb-2">Fluent</p>
+                    <p className="text-xl text-emerald-200 mb-2">Fluent</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-blue-400/50 transition-all duration-300">
+            <div className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex items-start space-x-4">
                   <div className="bg-green-500/20 p-3 rounded-full">
@@ -476,16 +635,16 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/30">
+      <motion.section {...sectionMotion} id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-800/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h2 className="section-title text-4xl font-bold mb-4 bg-gradient-to-r from-amber-200 via-stone-100 to-emerald-200 bg-clip-text text-transparent">
               Get In Touch
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto rounded-full"></div>
+            <div className="w-24 h-1 bg-gradient-to-r from-amber-200 to-emerald-200 mx-auto rounded-full"></div>
             <p className="text-slate-300 mt-6 max-w-2xl mx-auto">
               I'm always open to discussing new opportunities, interesting  projects, or just having a chat about technology.
             </p>
@@ -494,7 +653,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <a
               href="mailto:sarthakmahapatra303@gmail.com"
-              className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-red-400/50 transition-all duration-300 hover:transform hover:scale-105 text-center group"
+              className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-red-400/50 transition-all duration-300 hover:transform hover:scale-105 text-center group"
             >
               <Mail className="w-8 h-8 text-red-400 mx-auto mb-4 group-hover:animate-bounce" />
               <h3 className="text-lg font-semibold mb-2">Email</h3>
@@ -503,7 +662,7 @@ export default function Home() {
 
             <a
               href="tel:+919438826474"
-              className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-green-400/50 transition-all duration-300 hover:transform hover:scale-105 text-center group"
+              className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-green-400/50 transition-all duration-300 hover:transform hover:scale-105 text-center group"
             >
               <Phone className="w-8 h-8 text-green-400 mx-auto mb-4 group-hover:animate-bounce" />
               <h3 className="text-lg font-semibold mb-2">Phone</h3>
@@ -514,9 +673,9 @@ export default function Home() {
               href="www.linkedin.com/in/sarthak-mahapatra-3b681a316"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-blue-400/50 transition-all duration-300 hover:transform hover:scale-105 text-center group"
+              className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300 hover:transform hover:scale-105 text-center group"
             >
-              <Linkedin className="w-8 h-8 text-blue-400 mx-auto mb-4 group-hover:animate-bounce" />
+              <Linkedin className="w-8 h-8 text-amber-200 mx-auto mb-4 group-hover:animate-bounce" />
               <h3 className="text-lg font-semibold mb-2">LinkedIn</h3>
               <div className="flex items-center justify-center text-slate-300 text-sm">
                 <span>Connect with me</span>
@@ -528,9 +687,9 @@ export default function Home() {
               href="https://github.com/sarthakmahapatra05"
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-purple-400/50 transition-all duration-300 hover:transform hover:scale-105 text-center group"
+              className="feature-card bg-slate-800/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-700 hover:border-emerald-200/50 transition-all duration-300 hover:transform hover:scale-105 text-center group"
             >
-              <Github className="w-8 h-8 text-purple-400 mx-auto mb-4 group-hover:animate-bounce" />
+              <Github className="w-8 h-8 text-emerald-200 mx-auto mb-4 group-hover:animate-bounce" />
               <h3 className="text-lg font-semibold mb-2">GitHub</h3>
               <div className="flex items-center justify-center text-slate-300 text-sm">
                 <span>View my code</span>
@@ -539,7 +698,7 @@ export default function Home() {
             </a>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
       <footer className="bg-slate-800/50 py-8 px-4 sm:px-6 lg:px-8">
