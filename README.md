@@ -2,7 +2,8 @@
 
 # 👨‍💻 Sarthak Mahapatra Portfolio
 
-<img src="src/images/herosection photo.png" alt="Sarthak Mahapatra Portfolio Banner" width="100%" />
+<img src="src/images/herosection photo.png" alt="Sarthak Mahapatra Portfolio Banner" width="50%
+  " />
 
 <br/>
 
