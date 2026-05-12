@@ -1,48 +1,15 @@
-<div align="center">
-
-# 👨‍💻 Sarthak Mahapatra Portfolio
-
-<img src="src/images/herosection photo.png" alt="Sarthak Mahapatra Portfolio Banner" width="100%" />
-
-<br/>
-
-<p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Poppins&size=32&pause=1000&color=8A2BE2&center=true&vCenter=true&width=850&lines=Electronics+%26+Communication+Engineer;MERN+Stack+Developer;Full+Stack+Web+Developer;Building+Modern+Web+Experiences" />
-</p>
-
-<br/>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
-  <img src="https://img.shields.io/badge/Styling-TailwindCSS-38BDF8?style=for-the-badge&logo=tailwindcss&logoColor=white" />
-  <img src="https://img.shields.io/badge/Backend-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white" />
-  <img src="https://img.shields.io/badge/Database-MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" />
-  <img src="https://img.shields.io/badge/Deployment-Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" />
-</p>
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=react,tailwind,js,nodejs,express,mongodb,git,vscode" />
-</p>
-
-<p align="center">
-  <img src="https://komarev.com/ghpvc/?username=sarthakmahapatra05&label=Portfolio+Views&color=8A2BE2&style=for-the-badge" />
-</p>
-
-<br/>
-
-# 🌍 Live Portfolio
-
-### 🚀 https://sarthakmahapatraportfolio.netlify.app/
-
-</div>
-
----
-
 # ✨ About Me
 
-Hello! I'm **Sarthak Mahapatra**, an Electronics & Communication Engineering student and passionate MERN Stack Developer dedicated to building scalable, responsive, and user-friendly web applications.
+Hello! I'm **Sarthak Mahapatra**, an Electronics & Communication Engineering student and passionate Full Stack Developer with experience in MERN stack development, REST API integration, Docker containerization, and scalable web applications.
 
-I enjoy creating modern digital experiences that combine clean UI design with powerful backend functionality.
+I enjoy building modern digital experiences that combine clean UI design with strong backend architecture, real-world problem solving, and AI-powered solutions.
+
+Currently, I’m exploring:
+- 🚀 Full Stack Development
+- 🧠 AI & Machine Learning
+- 🐳 Docker & Cloud Deployment
+- 📊 Scalable Backend Systems
+- ⚡ Performance Optimization
 
 ---
 
@@ -55,199 +22,149 @@ I enjoy creating modern digital experiences that combine clean UI design with po
 | 📈 CGPA | 8.23 |
 | 📍 Location | Bhubaneswar, Odisha, India |
 | 💼 LinkedIn | [Sarthakmahapatra](https://www.linkedin.com/in/Sarthakmahapatra) |
+| 💻 GitHub | [sarthakmahapatra05](https://github.com/sarthakmahapatra05) |
 
 ---
 
-# 🚀 Portfolio Highlights
+# 💼 Experience
 
-✨ Modern responsive UI  
-🎨 Beautiful gradients and animations  
-📱 Mobile-friendly design  
-🧠 Interactive project showcase  
-📊 Skills visualization with progress bars  
-📚 Education & internship timeline  
-⚡ Smooth scrolling experience  
-🌐 Clean and professional portfolio structure  
+# 📈 AlgothedInfo Services Pvt. Ltd.
+
+### Software Engineering Intern  
+📅 03/2026 – Present  
+📍 Remote
+
+### Contributions
+
+- Developed and optimized components of an algorithmic trading low latency platform
+- Worked on real-time trading strategies based on market data and quantitative analysis
+- Collaborated on algorithmic trading workflows and backend infrastructure
+- Contributed to community-driven technical initiatives and development discussions
 
 ---
 
-# 🛠️ Tech Stack
+# 💻 CodeBeat
 
-| Category | Technologies |
-|---|---|
-| **Frontend** | React.js, Tailwind CSS |
-| **Backend** | Node.js, Express.js |
-| **Database** | MongoDB |
-| **Programming Languages** | JavaScript, HTML, CSS |
-| **Deployment** | Netlify |
+### Intern  
+📅 06/06/2025 – 30/06/2025  
+📍 Bhubaneswar, Odisha, India
+
+### Contributions
+
+- Developed full-stack web applications using MongoDB, Express.js, React.js, and Node.js
+- Built responsive frontend interfaces with React
+- Developed RESTful APIs using Express and Node.js
+- Managed backend logic and MongoDB database operations
 
 ---
 
 # 🌟 Featured Projects
 
-# 📂 ByteSweep
+# 🏥 Symptocare
 
-A full-stack MERN application designed for efficient file management and organization.
+### AI-Powered Full Stack Healthcare Platform
+
+A comprehensive healthcare ecosystem developed during **HackOdisha5.0** that connects patients and doctors through AI-powered healthcare services.
+
+### Key Features
+
+- 🧠 AI symptom analysis system
+- 👨‍⚕️ Doctor-patient appointment platform
+- 💬 Real-time communication system
+- 📊 Personalized health dashboard
+- 🔐 Multi-role authentication
+- 🐳 Dockerized deployment architecture
+
+### Contributions
+
+- Implemented Docker containerization for the full-stack Next.js application
+- Created Dockerfiles, docker-compose setup, and environment configurations
+- Improved deployment consistency and production readiness
+
+### Tech Stack
+
+```bash
+Next.js • React • TypeScript • Supabase • Docker • Flask
+```
+
+---
+
+# 🧒 Child Vaccination Portal
+
+### Open Source Contribution @ GSSOC'25
+
+A healthcare-focused child vaccination management portal with accessibility-first UI design.
 
 ### Features
 
-- File upload & management
-- Authentication system
-- Responsive dashboard
-- Modern UI/UX
-- Full-stack integration
+- Vaccination tracking system
+- Accessibility-compliant design
+- Responsive user interface
+- Optimized frontend performance
 
-### Tech Used
+### Contributions
+
+- Developed global dark/light theme toggle using React Context
+- Implemented localStorage persistence
+- Ensured accessibility compliance (ARIA, keyboard navigation, contrast)
+- Optimized UI rendering and smooth CSS transitions
+
+### Tech Stack
 
 ```bash
-MongoDB • Express.js • React.js • Node.js
+React.js • Context API • CSS • Accessibility Standards
 ```
 
 ---
 
-# ✅ To-Do Task App
+# 🧠 NeuroGuard AI
 
-A productivity-focused task management application with clean design and responsive functionality.
+### AI Stroke Prediction Tool
+
+An AI-powered healthcare application that predicts stroke risk based on patient health parameters using machine learning.
 
 ### Features
 
-- Task creation and deletion
-- Dynamic UI updates
-- Responsive design
-- Smooth interactions
+- 📊 Stroke risk prediction
+- 📈 Probability score generation
+- 📄 PDF report export
+- ⚡ REST API integration
+- 📱 Responsive frontend dashboard
 
-### Tech Used
+### Contributions
+
+- Built frontend using React, TypeScript, and Vite
+- Developed Flask REST APIs with CORS integration
+- Designed dynamic risk visualization dashboard
+- Implemented baseline ML prediction engine
+- Structured scalable backend architecture for future ML integration
+
+### Tech Stack
 
 ```bash
-React.js • JavaScript • Tailwind CSS
+React • TypeScript • Vite • Flask • Machine Learning
 ```
 
 ---
 
-# 💡 Key Features Of Portfolio
+# 🛠️ Technical Skills
 
-| Feature | Description |
+| Category | Skills |
 |---|---|
-| 🎨 Modern UI | Built with React + Tailwind CSS |
-| 📱 Responsive Design | Optimized for all screen sizes |
-| ⚡ Smooth Animations | Interactive transitions & effects |
-| 📂 Project Showcase | Displays real-world projects |
-| 📊 Skills Section | Technical skills with progress bars |
-| 📬 Contact Integration | Direct social & email links |
+| **Languages** | C, Python, JavaScript, Java |
+| **Frontend** | React.js, Next.js, HTML, CSS, Tailwind CSS |
+| **Backend** | Node.js, Express.js, Flask |
+| **Databases** | MongoDB, Supabase |
+| **DevOps & Cloud** | Docker, Kubernetes |
+| **Core CS** | Data Structures & Algorithms, OOP, REST APIs |
+| **Version Control** | Git, GitHub |
 
 ---
 
-# 📁 Project Structure
+# 🏆 Certifications & Leadership
 
-```bash
-Portfolio/
-│
-├── src/
-│   ├── components/
-│   ├── images/
-│   ├── pages/
-│   ├── App.jsx
-│   └── main.jsx
-│
-├── public/
-│
-├── package.json
-│
-├── tailwind.config.js
-│
-└── README.md
-```
-
----
-
-# 🏁 Getting Started
-
-# 🔹 Clone Repository
-
-```bash
-git clone https://github.com/sarthakmahapatra05/Portfolio.git
-```
-
----
-
-# 🔹 Navigate To Project
-
-```bash
-cd Portfolio
-```
-
----
-
-# 🔹 Install Dependencies
-
-```bash
-npm install
-```
-
----
-
-# 🔹 Start Development Server
-
-```bash
-npm run dev
-```
-
----
-
-# 🔹 Open In Browser
-
-```bash
-http://localhost:5173
-```
-
----
-
-# 🌐 Deployment
-
-The portfolio is deployed using **Netlify**.
-
-### Live URL
-
-```bash
-https://sarthakmahapatraportfolio.netlify.app/
-```
-
----
-
-# 📬 Contact
-
-| Platform | Link |
+| Achievement | Description |
 |---|---|
-| 📧 Email | sarthakmahapatra303@gmail.com |
-| 💼 LinkedIn | https://www.linkedin.com/in/Sarthakmahapatra |
-| 💻 GitHub | https://github.com/sarthakmahapatra05 |
-
----
-
-# 🌟 Future Improvements
-
-- 🌙 Dark/Light theme toggle
-- 📊 Dynamic GitHub statistics
-- 📝 Blog integration
-- 📱 Advanced animations
-- 🤖 AI chatbot assistant
-- 📄 Resume download section
-
----
-
-# 🙏 Acknowledgments
-
-- ⚛️ React.js community
-- 🎨 Tailwind CSS ecosystem
-- 🌐 Open-source contributors
-- 💡 Inspiration from modern developer portfolios
-
----
-
-<div align="center">
-
-# ⭐ Designed & Developed By Sarthak Mahapatra ⭐
-
-### Building modern web experiences with passion & creativity 🚀
-
-</div>
+| 🏅 HackOdisha5.0 | Organized by NITR, Odisha |
+| 🏅 Webtronics by SIPC (1st Prize Winner) | Developed and built features of a full-stack website |
+| 🏅 IEEE Student Branch Member | Organized events and improved leadership skills |
